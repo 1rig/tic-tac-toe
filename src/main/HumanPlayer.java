@@ -1,4 +1,3 @@
-import java.io.InputStream;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -11,7 +10,8 @@ public class HumanPlayer extends AbstractPlayer {
 
     public HumanPlayer() {
         super();
-        playerType = type.HUMAN;
+        playerType = Type.HUMAN;
+        playerSymbol = Symbol.X;
     }
 
     @Override
@@ -33,6 +33,7 @@ public class HumanPlayer extends AbstractPlayer {
         }
 
         System.out.println("You played on position " + position);
+        currentPlayPosition = position;
         return position;
     }
 

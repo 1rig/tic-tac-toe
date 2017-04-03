@@ -7,15 +7,17 @@ public class ComputerPlayer extends AbstractPlayer {
 
     public ComputerPlayer() {
         super();
-        playerType = type.COMPUTER;
+        playerType = Type.COMPUTER;
+        playerSymbol = Symbol.O;
     }
 
     @Override
     public int play(List<Integer> remainingPositions) {
 
         double randomPosition = Math.random() * remainingPositions.size();
+        currentPlayPosition = remainingPositions.get((int) randomPosition);
 
-        return remainingPositions.get((int) randomPosition);
+        return currentPlayPosition;
     }
 
 }

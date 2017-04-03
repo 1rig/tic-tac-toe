@@ -7,7 +7,10 @@ import java.util.List;
 public interface Player {
 
     public void playTurn(Character[][] board, List<Integer> remainingPositions);
-    public AbstractPlayer.type getPlayerType();
+    public AbstractPlayer.Type getPlayerType();
+    public AbstractPlayer.Symbol getPlayerSymbol();
+
+    public Integer getCurrentPlayPosition();
 
     public void setInputStream(InputStream inputStream);
 

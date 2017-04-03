@@ -17,7 +17,6 @@ public class GameTest {
         Game game = new Game();
         assertEquals(game.getPlayers().length, 2);
         assertEquals(Arrays.asList(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9}), game.getRemainingBoardPositions());
-
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -55,21 +54,130 @@ public class GameTest {
 
     @Test
     public void testCorrectCellPopulatedFromInput() {
+        String input = "1";
+        String input1 = "2";
+        String input2 = "4";
+        String input3 = "7";
+        String input4 = "9";
+
+        Game game = new Game();
+        Player humanPlayer = new HumanPlayer();
+
+        humanPlayer.setInputStream(new ByteArrayInputStream(input.getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+//        assertEquals(AbstractPlayer.Symbol.X.getSymbol(), game.getBoard()[0][0].charValue());
+        assertArrayEquals(new Character[]{AbstractPlayer.Symbol.X.getSymbol(), null, null}, game.getBoard()[0]);
+        assertArrayEquals(new Character[]{null, null, null}, game.getBoard()[1]);
+        assertArrayEquals(new Character[]{null, null, null}, game.getBoard()[2]);
+
+        humanPlayer.setInputStream(new ByteArrayInputStream(input1.getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+        assertArrayEquals(new Character[]{AbstractPlayer.Symbol.X.getSymbol(), AbstractPlayer.Symbol.X.getSymbol(), null}, game.getBoard()[0]);
+        assertArrayEquals(new Character[]{null, null, null}, game.getBoard()[1]);
+        assertArrayEquals(new Character[]{null, null, null}, game.getBoard()[2]);
+
+        humanPlayer.setInputStream(new ByteArrayInputStream(input2.getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+        assertArrayEquals(new Character[]{AbstractPlayer.Symbol.X.getSymbol(), AbstractPlayer.Symbol.X.getSymbol(), null}, game.getBoard()[0]);
+        assertArrayEquals(new Character[]{AbstractPlayer.Symbol.X.getSymbol(), null, null}, game.getBoard()[1]);
+        assertArrayEquals(new Character[]{null, null, null}, game.getBoard()[2]);
+
+        humanPlayer.setInputStream(new ByteArrayInputStream(input3.getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+        assertArrayEquals(new Character[]{AbstractPlayer.Symbol.X.getSymbol(), AbstractPlayer.Symbol.X.getSymbol(), null}, game.getBoard()[0]);
+        assertArrayEquals(new Character[]{AbstractPlayer.Symbol.X.getSymbol(), null, null}, game.getBoard()[1]);
+        assertArrayEquals(new Character[]{AbstractPlayer.Symbol.X.getSymbol(), null, null}, game.getBoard()[2]);
+
+        humanPlayer.setInputStream(new ByteArrayInputStream(input4.getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+        assertArrayEquals(new Character[]{AbstractPlayer.Symbol.X.getSymbol(), AbstractPlayer.Symbol.X.getSymbol(), null}, game.getBoard()[0]);
+        assertArrayEquals(new Character[]{AbstractPlayer.Symbol.X.getSymbol(), null, null}, game.getBoard()[1]);
+        assertArrayEquals(new Character[]{AbstractPlayer.Symbol.X.getSymbol(), null, AbstractPlayer.Symbol.X.getSymbol()}, game.getBoard()[2]);
 
     }
 
     @Test
     public void testRowWinner() {
+        Game game = new Game();
 
+        Player humanPlayer = new HumanPlayer();
+
+        humanPlayer.setInputStream(new ByteArrayInputStream("1".getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+        humanPlayer.setInputStream(new ByteArrayInputStream("2".getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+        humanPlayer.setInputStream(new ByteArrayInputStream("3".getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+
+        assertEquals(AbstractPlayer.Symbol.X.getSymbol(), game.isGameOver().charValue());
+    }
+
+    @Test
+    public void testInvalidRowWinner() {
+        Game game = new Game();
+
+        Player humanPlayer = new HumanPlayer();
+
+        humanPlayer.setInputStream(new ByteArrayInputStream("1".getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+        humanPlayer.setInputStream(new ByteArrayInputStream("3".getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+        humanPlayer.setInputStream(new ByteArrayInputStream("4".getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+
+        assertNull(game.isGameOver());
     }
 
     @Test
     public void testColumnWinner() {
+        Game game = new Game();
+
+        Player humanPlayer = new HumanPlayer();
+
+        humanPlayer.setInputStream(new ByteArrayInputStream("1".getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+        humanPlayer.setInputStream(new ByteArrayInputStream("4".getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+        humanPlayer.setInputStream(new ByteArrayInputStream("7".getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+
+        assertEquals(AbstractPlayer.Symbol.X.getSymbol(), game.isGameOver().charValue());
 
     }
 
     @Test
     public void testDiagonalWinner() {
+
+        Game game = new Game();
+
+        Player humanPlayer = new HumanPlayer();
+
+        humanPlayer.setInputStream(new ByteArrayInputStream("1".getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+        humanPlayer.setInputStream(new ByteArrayInputStream("5".getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+        humanPlayer.setInputStream(new ByteArrayInputStream("9".getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+
+        assertEquals(AbstractPlayer.Symbol.X.getSymbol(), game.isGameOver().charValue());
+
+    }
+
+    @Test
+    public void testReverseDiagonalWinner() {
+
+        Game game = new Game();
+
+        Player humanPlayer = new HumanPlayer();
+
+        humanPlayer.setInputStream(new ByteArrayInputStream("3".getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+        humanPlayer.setInputStream(new ByteArrayInputStream("5".getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+        humanPlayer.setInputStream(new ByteArrayInputStream("7".getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+
+        assertEquals(AbstractPlayer.Symbol.X.getSymbol(), game.isGameOver().charValue());
 
     }
 
@@ -78,13 +186,13 @@ public class GameTest {
         String input = "1";
         Game game = new Game();
         Player player = game.nextTurn();
-        assertEquals(AbstractPlayer.type.HUMAN, player.getPlayerType());
+        assertEquals(AbstractPlayer.Type.HUMAN, player.getPlayerType());
 
         player.setInputStream(new ByteArrayInputStream(input.getBytes()));
         player.playTurn(game.getBoard(), game.getRemainingBoardPositions());
 
         Player nextPlayer = game.nextTurn();
-        assertEquals(AbstractPlayer.type.COMPUTER, nextPlayer.getPlayerType());
+        assertEquals(AbstractPlayer.Type.COMPUTER, nextPlayer.getPlayerType());
     }
 
     @Test
@@ -99,8 +207,8 @@ public class GameTest {
         assertTrue(positions.contains(player.play(positions)));
 
     }
+
     @Test
     public void testGameDraw() {
-
     }
 }

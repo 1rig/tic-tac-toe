@@ -40,7 +40,7 @@ public class Game {
         players[1] = new HumanPlayer();
 
         board = new Character[BOARD_SIZE][BOARD_SIZE];
-        currentPlayer = players[0];
+        currentPlayer = players[1];
 
 //        remainingBoardPositions = new int[]{1,2,3,4,5,6,7,8,9};
         Integer[] positions = new Integer[BOARD_SIZE * BOARD_SIZE];
@@ -51,19 +51,55 @@ public class Game {
 
     public void startGame() {
         printBoard();
-        while (!gameOver()) {
+
+        Character winnerSymbol;
+        while ((winnerSymbol = isGameOver()) != null || remainingBoardPositions.size() > 0) {
             nextTurn().playTurn(board, remainingBoardPositions);
         }
     }
 
-    private boolean gameOver() {
-        return false;
+    /**
+     * @return: Winning symbol if game is over
+     *          Null if game is
+     */
+    protected Character isGameOver() {
+
+        // check row winning
+        for (int i= 0;  i < BOARD_SIZE; i++) {
+            if (board[i][0] == board[i][1] &&
+                    board[i][1] == board[i][2]) {
+                return board[i][0];
+            }
+        }
+
+        // check column winning
+        for (int i= 0;  i < BOARD_SIZE; i++) {
+            if (board[0][i] == board[1][i] &&
+                    board[1][i] == board[2][i]) {
+                return board[0][i];
+            }
+        }
+
+        // check diagonal winning
+        if (board[0][0] == board[1][1] &&
+                board[1][1] == board[2][2]) {
+            return board[0][0];
+        }
+
+        // check reverse diagonal winning
+        if (board[0][2] == board[1][1] &&
+                board[1][1] == board[2][0]) {
+            return board[0][2];
+        }
+
+
+        return null;
     }
 
     public Player nextTurn() {
         System.out.println(remainingBoardPositions);
-
-        return players[remainingBoardPositions.size() % 2];
+        currentPlayer = players[remainingBoardPositions.size() % 2];
+        return currentPlayer;
     }
 
     public void printBoard() {
