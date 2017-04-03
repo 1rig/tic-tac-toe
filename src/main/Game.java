@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * Created by rgopal on 3/31/17.
@@ -11,7 +11,8 @@ public class Game {
     private Character[][] board;
 
     private Player currentPlayer;
-    private int[] remainingBoardPositions ;
+
+    private List<Integer> remainingBoardPositions;
 
     public Player[] getPlayers() {
         return players;
@@ -25,7 +26,7 @@ public class Game {
         return currentPlayer;
     }
 
-    public int[] getRemainingBoardPositions() {
+    public List<Integer> getRemainingBoardPositions() {
         return remainingBoardPositions;
     }
 
@@ -35,26 +36,34 @@ public class Game {
      */
     public Game() {
         players = new Player[2];
-        players[0] = new HumanPlayer();
-        players[1] = new ComputerPlayer();
+        players[0] = new ComputerPlayer();
+        players[1] = new HumanPlayer();
 
         board = new Character[BOARD_SIZE][BOARD_SIZE];
         currentPlayer = players[0];
+
 //        remainingBoardPositions = new int[]{1,2,3,4,5,6,7,8,9};
-        remainingBoardPositions = new int[BOARD_SIZE * BOARD_SIZE];
-        Arrays.setAll(remainingBoardPositions, i -> i+1);
+        Integer[] positions = new Integer[BOARD_SIZE * BOARD_SIZE];
+        Arrays.setAll(positions, i -> i + 1);
+        remainingBoardPositions = new ArrayList<>();
+        remainingBoardPositions.addAll(Arrays.asList(positions));
     }
 
     public void startGame() {
-
+        printBoard();
+        while (!gameOver()) {
+            nextTurn().playTurn(board, remainingBoardPositions);
+        }
     }
 
-    private Player checkForWinner() {
-        return null;
+    private boolean gameOver() {
+        return false;
     }
 
     public Player nextTurn() {
-        return null;
+        System.out.println(remainingBoardPositions);
+
+        return players[remainingBoardPositions.size() % 2];
     }
 
     public void printBoard() {
@@ -62,9 +71,9 @@ public class Game {
                 "1-9 corresponding to the movement option on the right.");
 
         System.out.printf("Board:                                                           Movement Options: ");
-        System.out.printf("  |  |                                                            1 | 2 | 3 ");;
-        System.out.printf("  |  |                                                            4 | 5 | 6 ");;
-        System.out.printf("  |  |                                                            7 | 8 | 9 ");;
+        System.out.printf("  |  |                                                            1 | 2 | 3 ");
+        System.out.printf("  |  |                                                            4 | 5 | 6 ");
+        System.out.printf("  |  |                                                            7 | 8 | 9 ");
 
     }
 
