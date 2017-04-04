@@ -109,7 +109,7 @@ public class GameTest {
         humanPlayer.setInputStream(new ByteArrayInputStream("3".getBytes()));
         humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
 
-        assertEquals(AbstractPlayer.Symbol.X.getSymbol(), game.isGameOver().charValue());
+        assertEquals(Game.GAME_STATE.WIN, game.checkGameState());
     }
 
     @Test
@@ -125,7 +125,7 @@ public class GameTest {
         humanPlayer.setInputStream(new ByteArrayInputStream("4".getBytes()));
         humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
 
-        assertNull(game.isGameOver());
+        assertEquals(Game.GAME_STATE.PLAYING, game.checkGameState());
     }
 
     @Test
@@ -141,7 +141,7 @@ public class GameTest {
         humanPlayer.setInputStream(new ByteArrayInputStream("7".getBytes()));
         humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
 
-        assertEquals(AbstractPlayer.Symbol.X.getSymbol(), game.isGameOver().charValue());
+        assertEquals(Game.GAME_STATE.WIN, game.checkGameState());
 
     }
 
@@ -159,8 +159,7 @@ public class GameTest {
         humanPlayer.setInputStream(new ByteArrayInputStream("9".getBytes()));
         humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
 
-        assertEquals(AbstractPlayer.Symbol.X.getSymbol(), game.isGameOver().charValue());
-
+        assertEquals(Game.GAME_STATE.WIN, game.checkGameState());
     }
 
     @Test
@@ -177,8 +176,7 @@ public class GameTest {
         humanPlayer.setInputStream(new ByteArrayInputStream("7".getBytes()));
         humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
 
-        assertEquals(AbstractPlayer.Symbol.X.getSymbol(), game.isGameOver().charValue());
-
+        assertEquals(Game.GAME_STATE.WIN, game.checkGameState());
     }
 
     @Test
@@ -210,5 +208,13 @@ public class GameTest {
 
     @Test
     public void testGameDraw() {
+        Game game = new Game();
+
+        Player humanPlayer = new HumanPlayer();
+        humanPlayer.setInputStream(new ByteArrayInputStream("1".getBytes()));
+        humanPlayer.playTurn(game.getBoard(), game.getRemainingBoardPositions());
+
+        game.clearRemainingBoardPositions();
+        assertEquals(Game.GAME_STATE.DRAW, game.checkGameState());
     }
 }
