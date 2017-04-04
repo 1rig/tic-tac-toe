@@ -17,6 +17,8 @@ public class ComputerPlayer extends AbstractPlayer {
         double randomPosition = Math.random() * remainingPositions.size();
         currentPlayPosition = remainingPositions.get((int) randomPosition);
 
+        System.out.print("I will put an " + getPlayerSymbol() + " in the " + Game.getPrintablePosition(currentPlayPosition) + ".");
+
         return currentPlayPosition;
     }
 

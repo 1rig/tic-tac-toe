@@ -217,4 +217,19 @@ public class GameTest {
         game.clearRemainingBoardPositions();
         assertEquals(Game.GAME_STATE.DRAW, game.checkGameState());
     }
+
+    @Test
+    public void testPrintablePosition() {
+
+        HumanPlayer player = new HumanPlayer();
+        assertEquals("upper left", Game.getPrintablePosition(1));
+        assertEquals("upper middle", Game.getPrintablePosition(2));
+        assertEquals("upper right", Game.getPrintablePosition(3));
+        assertEquals("center left", Game.getPrintablePosition(4));
+        assertEquals("center", Game.getPrintablePosition(5));
+        assertEquals("center right", Game.getPrintablePosition(6));
+        assertEquals("lower left", Game.getPrintablePosition(7));
+        assertEquals("lower middle", Game.getPrintablePosition(8));
+        assertEquals("lower right", Game.getPrintablePosition(9));
+    }
 }

@@ -32,8 +32,8 @@ public class HumanPlayer extends AbstractPlayer {
             throw new IllegalArgumentException("Invalid input. Please try again");
         }
 
-        System.out.println("You played on position " + position);
         currentPlayPosition = position;
+        System.out.print("You have put an " + getPlayerSymbol() + " in the " + Game.getPrintablePosition(currentPlayPosition) + ". ");
         return position;
     }
 

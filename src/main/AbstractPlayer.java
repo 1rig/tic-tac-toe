@@ -25,11 +25,6 @@ public abstract class AbstractPlayer implements Player{
     protected Symbol playerSymbol;
     protected Integer currentPlayPosition;
 
-    @Override
-    public Integer getCurrentPlayPosition() {
-        return currentPlayPosition;
-    }
-
     private InputStream inputStream = System.in;
 
     @Override
@@ -68,9 +63,10 @@ public abstract class AbstractPlayer implements Player{
 
         // translate input to board coordinates
         // update board
-        int boardsize = board[0].length;
-        int x = (playPosition -1 )/ boardsize;
-        int y = (playPosition - 1) % boardsize;
+        int x = Game.getPositionX(playPosition);
+        int y = Game.getPositionY(playPosition);
+
         board[x][y] = getPlayerSymbol().getSymbol();
     }
+
 }
