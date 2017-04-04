@@ -6,7 +6,8 @@ Computer play is done by a simple random picker. Game determines who the winner 
 Run the main method in Game.java to begin game.
 
 # Sample output
-```Welcome to Tic-Tac-Toe.  Please make your move selection by entering a number
+```
+Welcome to Tic-Tac-Toe.  Please make your move selection by entering a number
 1-9 corresponding to the movement option on the right.
 
 Board:                                                           Movement Options: 
